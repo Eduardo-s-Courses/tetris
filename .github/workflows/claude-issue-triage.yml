@@ -43,6 +43,10 @@ jobs:
                    gh issue edit ${{ github.event.issue.number }} --add-label "<nombre>"
             4. Publica un comentario en español con un diagnóstico técnico detallado
                usando: gh issue comment ${{ github.event.issue.number }} --body "..."
+               El comentario debe estar redactado en formato Markdown que GitHub pueda
+               interpretar correctamente (encabezados con #, listas con - o *, énfasis
+               con **negrita** o *cursiva*, bloques de código con ``` y código en línea
+               con `backticks`, enlaces con [texto](url), etc.).
                El comentario debe incluir:
                  - **Resumen**: qué pide o reporta el issue.
                  - **Causa raíz probable / análisis**: por qué ocurre o qué implica.
