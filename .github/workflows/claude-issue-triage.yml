@@ -1,0 +1,55 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write # necesario para crear labels, etiquetar y comentar
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Issue Triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: '--allowed-tools "Read,Grep,Glob,Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*),Bash(gh label create:*)"'
+          prompt: |
+            Eres el responsable de triaje de issues de este repositorio: un juego de
+            Tetris en JavaScript vanilla (Canvas 2D). La lógica está en `game.js`,
+            la estructura DOM en `index.html` y los estilos en `style.css`. La UI está
+            en español. Trabaja en español.
+
+            Analiza el issue #${{ github.event.issue.number }}.
+
+            Pasos:
+            1. Lee el issue con: gh issue view ${{ github.event.issue.number }}
+            2. Revisa el código relevante del repo (game.js, index.html, style.css)
+               para entender el contexto del problema o solicitud.
+            3. Determina 1-3 labels apropiados (ej. tipo de issue, área afectada,
+               prioridad). Para cada label:
+                 - Si no existe, créalo:
+                   gh label create "<nombre>" --description "<desc breve>" --color <hex>
+                   (si el label ya existe, ignora el error y continúa)
+                 - Asígnalo:
+                   gh issue edit ${{ github.event.issue.number }} --add-label "<nombre>"
+            4. Publica un comentario en español con un diagnóstico técnico detallado
+               usando: gh issue comment ${{ github.event.issue.number }} --body "..."
+               El comentario debe incluir:
+                 - **Resumen**: qué pide o reporta el issue.
+                 - **Causa raíz probable / análisis**: por qué ocurre o qué implica.
+                 - **Archivos y funciones afectados**: rutas y nombres concretos
+                   (ej. game.js: rotateCW, tryRotate, loop, spawn, init...).
+                 - **Enfoque sugerido para la solución**: pasos de alto nivel,
+                   sin escribir todavía el código completo.
+                 - **Labels asignados** y su justificación.
+
+            No abras PRs ni modifiques archivos del proyecto: solo etiqueta y comenta.
