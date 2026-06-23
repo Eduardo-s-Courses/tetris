@@ -254,3 +254,143 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Records / pantalla de inicio ---- */
+.hidden {
+  display: none !important;
+}
+
+.records-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  width: 240px;
+  max-width: 80vw;
+}
+
+.records-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.records-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--kbd-bg);
+  color: var(--text);
+}
+
+.records-list .record-rank {
+  color: var(--label);
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.records-list .record-name {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.records-list .record-score {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.records-list .record-highlight {
+  background: var(--accent);
+  color: var(--btn-color);
+}
+
+.records-list .record-highlight .record-rank,
+.records-list .record-highlight .record-score {
+  color: var(--btn-color);
+}
+
+.records-list .record-empty {
+  justify-content: center;
+  color: var(--label);
+  background: transparent;
+}
+
+.records-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--controls-text);
+}
+
+.records-stats strong {
+  color: var(--accent);
+}
+
+.name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  width: 240px;
+  max-width: 80vw;
+}
+
+#name-input {
+  background: var(--bg-canvas);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  text-align: center;
+}
+
+#name-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.primary-btn {
+  background: var(--accent);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+.primary-btn:hover {
+  background: #9bbdff;
+}
+
+.reset-btn {
+  background: transparent;
+  color: var(--label);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.reset-btn:hover {
+  color: var(--overlay-title);
+  border-color: var(--overlay-title);
+}
